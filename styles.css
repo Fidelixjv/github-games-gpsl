@@ -109,10 +109,22 @@ body.theme-neon #theme-select {
     border-color: #00FFFF;
 }
 
+/* Todos os textos do menu */
+body.theme-neon #menu p {
+    color: #00FFFF;
+}
+
+/* Botão Press Space to Play */
 body.theme-neon #menu p a {
     color: #00FFFF;
 }
 
+/* Texto "Tema" */
+body.theme-neon #theme-container label {
+    color: #00FFFF;
+}
+
+/* Números do Score e Rows */
 body.theme-neon #score,
 body.theme-neon #rows {
     color: #00FFFF;
@@ -122,9 +134,8 @@ body.theme-neon #canvas {
     border-color: #00FFFF;
 }
 
-
 /* ============================= */
-/* RESPONSIVIDADE ORIGINAL        */
+/* RESPONSIVIDADE       */
 /* ============================= */
 
 @media screen and (min-width:   0px) and (min-height:   0px)  { #tetris { font-size: 0.75em; width: 250px; } #menu { width: 100px; height: 200px; } #upcoming { width:  50px; height:  50px; } #canvas { width: 100px; height: 200px; } } /* 10px chunks */
