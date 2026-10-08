@@ -238,6 +238,9 @@ var Stats = function () {
     function addEvents() {
       document.addEventListener('keydown', keydown, false);
       window.addEventListener('resize', resize, false);
+      get('game-over-restart').addEventListener('click', function() {
+        window.location.reload();
+      });
     }
 
     function resize(event) {
@@ -253,6 +256,8 @@ var Stats = function () {
 
     function keydown(ev) {
       var handled = false;
+      if (!get('game-over').hidden)
+        return;
       if (playing) {
         switch(ev.keyCode) {
           case KEY.LEFT:   actions.push(DIR.LEFT);  handled = true; break;
@@ -283,7 +288,7 @@ var Stats = function () {
     function play() { hide('start'); reset();      paused = false;  playing = true;  }
     function pause() {show('start'); paused = true; playing = false;}
     function restart() {hide('start'); paused = false; playing = true;}
-    function lose() { show('start'); setVisualScore(); playing = false; }
+    function lose() { hide('start'); get('game-over').hidden = false; setVisualScore(); playing = false; }
 
     function setVisualScore(n)      { vscore = n || score; invalidateScore(); }
     function setScore(n)            { score = n; setVisualScore(n);  }
