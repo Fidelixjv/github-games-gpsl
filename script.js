@@ -288,7 +288,29 @@ var Stats = function () {
     function play() { hide('start'); reset();      paused = false;  playing = true;  }
     function pause() {show('start'); paused = true; playing = false;}
     function restart() {hide('start'); paused = false; playing = true;}
-    function lose() { hide('start'); get('game-over').hidden = false; setVisualScore(); playing = false; }
+    function lose() {
+      hide('start');
+      setVisualScore();
+      html('game-over-score', ("00000" + Math.floor(score)).slice(-5));
+      html('game-over-rows', rows);
+      drawGameOverPiece();
+      get('game-over').hidden = false;
+      playing = false;
+    }
+
+    function drawGameOverPiece() {
+      var pieceCanvas = get('game-over-piece');
+      var pieceContext;
+      var padding = (nu - current.type.size) / 2;
+      pieceCanvas.width = nu * dx;
+      pieceCanvas.height = nu * dy;
+      pieceContext = pieceCanvas.getContext('2d');
+      pieceContext.save();
+      pieceContext.lineWidth = 1;
+      pieceContext.translate(0.5, 0.5);
+      drawPiece(pieceContext, current.type, padding, padding, current.dir);
+      pieceContext.restore();
+    }
 
     function setVisualScore(n)      { vscore = n || score; invalidateScore(); }
     function setScore(n)            { score = n; setVisualScore(n);  }
