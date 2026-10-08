@@ -158,10 +158,13 @@ var Stats = function () {
     var s = { size: 3, blocks: [0x06C0, 0x8C40, 0x6C00, 0x4620], color: 'teal'  };
     var t = { size: 3, blocks: [0x0E40, 0x4C40, 0x4E00, 0x4640], color: 'coral' };
     var z = { size: 3, blocks: [0x0C60, 0x4C80, 0xC600, 0x2640], color: 'olive'    };
-
+    var Plus = { size: 3, blocks: [0x4E40, 0x4E40, 0x4E40, 0x4E40], color: 'orange'    };
+    var block = { size: 3, blocks: [0xeee0, 0xeee0, 0xeee0, 0xeee0], color: 'green'    };
+    var block2 = { size: 4, blocks: [0xFfff, 0xFfff, 0xFfff, 0xFfff], color: 'blue'    };
+    var oo = { size: 4, blocks: [0xCCcc, 0x00ff, 0xCCcc, 0x00ff], color: 'red' };
     //------------------------------------------------
     // do the bit manipulation and iterate through each
-    // occupied block (x,y) for a given piece
+    // occupied block (x,y) for a given piecere
     //------------------------------------------------
     function eachblock(type, x, y, dir, fn) {
       var bit, result, row = 0, col = 0, blocks = type.blocks[dir];
@@ -199,7 +202,7 @@ var Stats = function () {
     var pieces = [];
     function randomPiece() {
       if (pieces.length == 0)
-        pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+        pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z,Plus,Plus,Plus,Plus,block,block,block,blocks,block2,block2,block2,block2,oo,oo,oo,oo];
       var type = pieces.splice(random(0, pieces.length-1), 1)[0];
       return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
     }
