@@ -238,7 +238,7 @@ var Stats = function () {
     function addEvents() {
       document.addEventListener('keydown', keydown, false);
       window.addEventListener('resize', resize, false);
-      get('restartButton').addEventListener('click', play, false);
+      get('restartButton').addEventListener('click', restartGame, false);
     }
 
     function resize(event) {
@@ -281,7 +281,7 @@ var Stats = function () {
     // GAME LOGIC
     //-------------------------------------------------------------------------
 
-    function play() { hide('start'); reset();      paused = false;  playing = true;  }
+    function play() { hide('start'); reset();paused = false;  playing = true;  }
     function pause() {show('start'); paused = true; playing = false;}
     function restart() {hide('start'); paused = false; playing = true;}
     function lose() { show('start'); setVisualScore(); playing = false; }
@@ -299,6 +299,7 @@ var Stats = function () {
     function clearActions()         { actions = []; }
     function setCurrentPiece(piece) { current = piece || randomPiece(); invalidate();     }
     function setNextPiece(piece)    { next    = piece || randomPiece(); invalidateNext(); }
+    function restartGame() {reset();hide('start');paused = false;playing = true;}   
 
     function reset() {
       dt = 0;
