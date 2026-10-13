@@ -270,8 +270,7 @@ var Stats = function () {
       }
       else if (ev.keyCode == KEY.SPACE) {
         if(paused) {
-            restart();
-            handled = true;
+            
           }else{
             play();
             handled = true;
@@ -284,11 +283,69 @@ var Stats = function () {
     //-------------------------------------------------------------------------
     // GAME LOGIC
     //-------------------------------------------------------------------------
+ const resume = get('resume');
 
-    function play() { hide('start'); reset();      paused = false;  playing = true;  }
-    function pause() {show('start'); paused = true; playing = false;}
-    function restart() {hide('start'); paused = false; playing = true;}
-    function lose() {
+resume.addEventListener('click', function() {
+    closeGameModal();
+    resumeCountdown();
+});
+
+function openGameModal() {
+    hide('start');
+    show('container-pause');
+
+    get('container-pause').style.visibility = 'visible';
+    paused = true;
+    playing = false;
+}
+
+function closeGameModal() {
+    get('container-pause').style.visibility = 'hidden';
+}
+
+function resumeCountdown() {
+    let countdown = 5;
+
+    const countdownElement = get('start');
+    show('start');
+
+   countdownElement.textContent = `O jogo vai começar em: ${countdown}`;
+
+    const interval = setInterval(function() {
+        countdown--;
+
+        countdownElement.textContent = `O jogo vai começar em: ${countdown}`;
+
+        if (countdown === 0) {
+            clearInterval(interval);
+            hide('start');
+
+            paused = false;
+            playing = true;
+        }
+    }, 1000);
+}
+
+function play() {
+    hide('start');
+    reset();
+    paused = false;
+    playing = true;
+}
+
+function pause() {
+  show('start');
+    paused = true;
+    playing = false;
+    openGameModal();
+}
+
+function restart() {
+  closeGameModal();
+  resumeCountdown();
+   
+}
+     function lose() {
       hide('start');
       setVisualScore();
       html('game-over-score', ("00000" + Math.floor(score)).slice(-5));

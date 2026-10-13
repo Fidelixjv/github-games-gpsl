@@ -9,7 +9,7 @@ body      { font-family: Helvetica, sans-serif; }
     #score    { color: blue; font-weight: bold; vertical-align: middle; }
     #rows     { color: blue; font-weight: bold; vertical-align: middle; }
     #stats    { position: absolute; bottom: 0em; right: 1em; }
-    #game-over { position: fixed; inset: 0; z-index: 10002; display: flex; align-items: center; justify-content: center; padding: 1em; background: rgba(0, 0, 0, 0.72); }
+ #game-over { position: fixed; inset: 0; z-index: 10002; display: flex; align-items: center; justify-content: center; padding: 1em; background: rgba(0, 0, 0, 0.72); }
     #game-over[hidden] { display: none; }
     .game-over-content { display: grid; justify-items: center; gap: 1em; min-width: 240px; padding: 2em; border: 3px solid #222; border-radius: 8px; background: #F8F8F8; text-align: center; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35); }
     .game-over-content h1 { margin: 0; color: #c62828; }
@@ -19,6 +19,84 @@ body      { font-family: Helvetica, sans-serif; }
     #game-over-rows { color: #16833c; font-size: 1.25em; }
     #game-over-restart { padding: 0.7em 1.2em; border: 0; border-radius: 4px; background: #222; color: white; font: inherit; cursor: pointer; }
     #game-over-restart:hover { background: #444; }
+#container-pause {
+    display: flex;
+    position: fixed;
+    top: 0;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        visibility: hidden;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+#pause {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 24px;
+  box-sizing: border-box;
+
+  /* Efeito de Vidro Jateado */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  /* Bordas arredondadas e sombras sutis */
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+#pause-icon {
+ 
+  width: 30px;
+  height: 30px;
+ 
+}
+
+#resume {
+ display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+  background-color: #6366f1; /* Tom azul/púrpura suave */
+  color: #ffffff;
+  
+  border: none;
+  border-radius: 50px; /* Estilo pílula */
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  
+  /* Sombra roxa no botão */
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+ 
+}
+
+#resume:hover {
+    background-color: aqua;
+}
+
+
+
+
+
+
     @media screen and (min-width:   0px) and (min-height:   0px)  { #tetris { font-size: 0.75em; width: 250px; } #menu { width: 100px; height: 200px; } #upcoming { width:  50px; height:  50px; } #canvas { width: 100px; height: 200px; } } /* 10px chunks */
     @media screen and (min-width: 400px) and (min-height: 400px)  { #tetris { font-size: 1.00em; width: 350px; } #menu { width: 150px; height: 300px; } #upcoming { width:  75px; height:  75px; } #canvas { width: 150px; height: 300px; } } /* 15px chunks */
     @media screen and (min-width: 500px) and (min-height: 500px)  { #tetris { font-size: 1.25em; width: 450px; } #menu { width: 200px; height: 400px; } #upcoming { width: 100px; height: 100px; } #canvas { width: 200px; height: 400px; } } /* 20px chunks */
