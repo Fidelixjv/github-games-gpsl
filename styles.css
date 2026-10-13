@@ -227,38 +227,75 @@ body {
 
 
 
-#container-pause{
+#container-pause {
     display: flex;
-    justify-content: center;
+    position: fixed;
+    top: 0;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    z-index: 1000;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        visibility: hidden;
 }
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
 #pause {
-    display: flex;
-    flex-direction: rom;
-    justify-content: center;
-    align-items: center;
-    background-color: #999;
-    color: #F8F8F8;
-    height: 350px;
-    width: 500px;
-    border-radius: 15px;
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 24px;
+  box-sizing: border-box;
 
+  /* Efeito de Vidro Jateado */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  /* Bordas arredondadas e sombras sutis */
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+#pause-icon {
+ 
+  width: 30px;
+  height: 30px;
+ 
 }
 
 #resume {
-    height: 100px;
-    width: 200px;
-    border: 1px solid;
-    border-radius: 15px;
-    font-size: 32px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    box-shadow: 5px 5px 1px black;
-
+ display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+  background-color: #6366f1; /* Tom azul/púrpura suave */
+  color: #ffffff;
+  
+  border: none;
+  border-radius: 50px; /* Estilo pílula */
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  
+  /* Sombra roxa no botão */
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+ 
 }
-#resume:hover{
-        background-color: aqua;
+
+#resume:hover {
+    background-color: aqua;
 }
