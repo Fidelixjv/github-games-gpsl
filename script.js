@@ -238,6 +238,7 @@ var Stats = function () {
     function addEvents() {
       document.addEventListener('keydown', keydown, false);
       window.addEventListener('resize', resize, false);
+      get('restartButton').addEventListener('click', play, false);
     }
 
     function resize(event) {
