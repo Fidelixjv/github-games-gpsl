@@ -380,6 +380,9 @@ function showStats() {
 function addEvents() {
   document.addEventListener('keydown', keydown, false);
   window.addEventListener('resize', resize, false);
+  get('game-over-restart').addEventListener('click', function() {
+    window.location.reload();
+  });
 }
 
 function resize(event) {
@@ -397,6 +400,9 @@ function resize(event) {
 
 function keydown(ev) {
   var handled = false;
+
+  if (!get('game-over').hidden)
+    return;
 
   if (playing) {
     switch (ev.keyCode) {
@@ -470,9 +476,28 @@ function restart() {
 }
 
 function lose() {
-  show('start');
+  hide('start');
   setVisualScore();
+  html('game-over-score', ("00000" + Math.floor(score)).slice(-5));
+  html('game-over-rows', rows);
+  drawGameOverPiece();
+  get('game-over').hidden = false;
   playing = false;
+}
+
+function drawGameOverPiece() {
+  var pieceCanvas = get('game-over-piece');
+  var pieceContext;
+  var padding = (nu - current.type.size) / 2;
+
+  pieceCanvas.width = nu * dx;
+  pieceCanvas.height = nu * dy;
+  pieceContext = pieceCanvas.getContext('2d');
+  pieceContext.save();
+  pieceContext.lineWidth = 1;
+  pieceContext.translate(0.5, 0.5);
+  drawPiece(pieceContext, current.type, padding, padding, current.dir);
+  pieceContext.restore();
 }
 
 function setVisualScore(n) {
@@ -928,9 +953,6 @@ function drawBlock(ctx, x, y, color) {
   );
 }
 
-//-------------------------------------------------------------------------
-// FINALLY, lets run the game
-//-------------------------------------------------------------------------
 
 initializeTheme();
 run();
