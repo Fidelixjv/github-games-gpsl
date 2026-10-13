@@ -161,7 +161,6 @@ var Stats = function () {
     var z = { size: 3, blocks: [0x0C60, 0x4C80, 0xC600, 0x2640], color: 'pink'    };
     var Plus = { size: 3, blocks: [0x4E40, 0x4E40, 0x4E40, 0x4E40], color: 'teal'    };
     var block = { size: 3, blocks: [0xeee0, 0xeee0, 0xeee0, 0xeee0], color: 'coral'    };
-    var block2 = { size: 4, blocks: [0xFfff, 0xFfff, 0xFfff, 0xFfff], color: 'turquoise'    };
     var oo = { size: 4, blocks: [0xCCcc, 0x00ff, 0xCCcc, 0x00ff], color: 'maroon' };  
 
 
@@ -205,7 +204,7 @@ var Stats = function () {
     var pieces = [];
     function randomPiece() {
       if (pieces.length == 0)
-        pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z,Plus,Plus,Plus,Plus,block,block,block,block,block2,block2,block2,block2,oo,oo,oo,oo];
+        pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z,Plus,Plus,Plus,Plus,block,block,block,block,oo,oo,oo,oo];
       var type = pieces.splice(random(0, pieces.length-1), 1)[0];
       return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
     }
