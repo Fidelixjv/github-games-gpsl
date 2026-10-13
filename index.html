@@ -1,3 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Javascript Tetris</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="tetris">
+    <div id="menu">
+      <p id="start"><a href="javascript:play();">Press Space to Play.</a></p>
+      <p><canvas id="upcoming"></canvas></p>
+      <p>score <span id="score">00000</span></p>
+      <p>rows <span id="rows">0</span></p>
+    </div>
+    <canvas id="canvas">
+      Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+    </canvas>
+  </div>
+
   <div id="game-over" role="dialog" aria-modal="true" aria-labelledby="game-over-title" hidden>
     <div class="game-over-content">
       <h1 id="game-over-title">Game-Over</h1>
@@ -11,15 +32,23 @@
   <div id="container-pause">
     <div id="pause">
       <div class="modal-header">
-        <img src="assets/pause.png" alt="Pause Icon" id="pause-icon"/>
+      
+          <img src="assets/pause.png" alt="Pause Icon" id="pause-icon"/>
+     
         <h2>Game Paused</h2>
       </div>
 
       <button id="resume">
         Resume
+
       </button>
+
+
     </div>
+
+
   </div>
+
 
 </body>
 <script src="script.js"></script>
