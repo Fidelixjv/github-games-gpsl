@@ -464,6 +464,122 @@ body      { font-family: Helvetica, sans-serif; background-color: #efefef; }
     transform: scale(1.05);
 }
 
+    /* ============================= */
+    /* SELETOR DE TEMAS               */
+    /* ============================= */
+
+    #theme-container {
+      margin: 0.8em 0;
+      text-align: center;
+    }
+
+    #theme-container label {
+      display: block;
+      margin-bottom: 0.3em;
+      font-weight: bold;
+      font-size: 0.6em;
+    }
+
+    #theme-select {
+      padding: 0.3em;
+      border: 2px solid #333;
+      border-radius: 5px;
+      background-color: white;
+      color: black;
+      cursor: pointer;
+    }
+
+    /* ============================= */
+    /* TEMAS VISUAIS                  */
+    /* ============================= */
+
+    body.theme-classic #tetris {
+      background-color: #F8F8F8;
+      border-color: black;
+    }
+
+    body.theme-classic #theme-select {
+      background-color: white;
+      color: black;
+    }
+
+    body.theme-ocean #tetris {
+      background-color: #E3F2FD;
+      border-color: #0277BD;
+    }
+
+    body.theme-ocean #theme-select {
+      background-color: #E1F5FE;
+      color: #01579B;
+      border-color: #0277BD;
+    }
+
+    body.theme-ocean #menu p a {
+      color: #01579B;
+    }
+
+    body.theme-ocean #score,
+    body.theme-ocean #rows {
+      color: #0277BD;
+    }
+
+    body.theme-red #tetris {
+      background-color: #FFEBEE;
+      border-color: #B71C1C;
+    }
+
+    body.theme-red #theme-select {
+      background-color: #FFCDD2;
+      color: #B71C1C;
+      border-color: #B71C1C;
+    }
+
+    body.theme-red #menu p a {
+      color: #B71C1C;
+    }
+
+    body.theme-red #score,
+    body.theme-red #rows {
+      color: #D32F2F;
+    }
+
+    body.theme-neon #tetris {
+      background-color: #111111;
+      border-color: #00FFFF;
+    }
+
+    body.theme-neon #theme-select {
+      background-color: #222222;
+      color: #00FFFF;
+      border-color: #00FFFF;
+    }
+
+    body.theme-neon #menu p {
+      color: #00FFFF;
+    }
+
+    body.theme-neon #menu p a {
+      color: #00FFFF;
+    }
+
+    body.theme-neon #theme-container label {
+      color: #00FFFF;
+    }
+
+    body.theme-neon #score,
+    body.theme-neon #rows {
+      color: #00FFFF;
+    }
+
+    body.theme-neon #canvas {
+      border-color: #00FFFF;
+    }
+
+    /* ============================= */
+    /* NÍVEL (cor)                    */
+    /* ============================= */
+    #level { color: #d97706; font-weight: bold; vertical-align: middle; }
+
     @media screen and (min-width:   0px) and (min-height:   0px)  { #tetris { font-size: 0.75em; width: 250px; } #menu { width: 100px; height: 200px; } #upcoming { width:  50px; height:  50px; } #canvas { width: 100px; height: 200px; } } /* 10px chunks */
     @media screen and (min-width: 400px) and (min-height: 400px)  { #tetris { font-size: 1.00em; width: 350px; } #menu { width: 150px; height: 300px; } #upcoming { width:  75px; height:  75px; } #canvas { width: 150px; height: 300px; } } /* 15px chunks */
     @media screen and (min-width: 500px) and (min-height: 500px)  { #tetris { font-size: 1.25em; width: 450px; } #menu { width: 200px; height: 400px; } #upcoming { width: 100px; height: 100px; } #canvas { width: 200px; height: 400px; } } /* 20px chunks */

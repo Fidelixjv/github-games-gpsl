@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Javascript Tetris</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
   <div id="game-container">
     <div id="tetris">
@@ -16,6 +14,17 @@
         <p>rows <span id="rows">0</span></p>
         <p>level <span id="level">1</span></p>
         <button id="restartButton" type="button">↻ Reiniciar jogo</button>
+
+        <!-- Seletor de tema -->
+        <div id="theme-container">
+          <label for="theme-select">🎨 Tema</label>
+          <select id="theme-select">
+            <option value="classic">Clássico</option>
+            <option value="ocean">Oceano</option>
+            <option value="red">Vermelho</option>
+            <option value="neon">Neon</option>
+          </select>
+        </div>
       </div>
       <canvas id="canvas">
         Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
@@ -58,25 +67,16 @@
   <div id="container-pause">
     <div id="pause">
       <div class="modal-header">
-      
-          <img src="assets/pause.png" alt="Pause Icon" id="pause-icon"/>
-     
+        <img src="assets/pause.png" alt="Pause Icon" id="pause-icon"/>
         <h2>Game Paused</h2>
       </div>
 
       <button id="resume">
         Resume
-
       </button>
-
-
     </div>
-
-
   </div>
 
-
+  <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
-
 </html>

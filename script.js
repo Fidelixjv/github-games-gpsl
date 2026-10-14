@@ -119,6 +119,48 @@ var Stats = function () {
         nu      = 5;  // width/height of upcoming preview (in blocks)
 
     //-------------------------------------------------------------------------
+    // TEMAS VISUAIS
+    //-------------------------------------------------------------------------
+
+    var THEMES = {
+      classic: { className: 'theme-classic' },
+      ocean: { className: 'theme-ocean' },
+      red: { className: 'theme-red' },
+      neon: { className: 'theme-neon' }
+    };
+
+    var currentTheme = 'classic';
+
+    function applyTheme(themeName) {
+      if (!THEMES[themeName]) themeName = 'classic';
+      currentTheme = themeName;
+      var body = document.body;
+      body.classList.remove('theme-classic', 'theme-ocean', 'theme-red', 'theme-neon');
+      body.classList.add(THEMES[themeName].className);
+      var select = get('theme-select');
+      if (select) select.value = themeName;
+      try { localStorage.setItem('tetris-theme', themeName); } catch (e) {}
+      invalidate();
+      invalidateNext();
+    }
+
+    function initializeTheme() {
+      var savedTheme = null;
+      try { savedTheme = localStorage.getItem('tetris-theme'); } catch (e) { savedTheme = null; }
+      if (!savedTheme || !THEMES[savedTheme]) savedTheme = 'classic';
+      currentTheme = savedTheme;
+      document.body.classList.remove('theme-classic', 'theme-ocean', 'theme-red', 'theme-neon');
+      document.body.classList.add(THEMES[savedTheme].className);
+      var select = get('theme-select');
+      if (select) {
+        select.value = savedTheme;
+        select.addEventListener('change', function() {
+          applyTheme(this.value);
+        });
+      }
+    }
+
+    //-------------------------------------------------------------------------
     // game variables (initialized during reset)
     //-------------------------------------------------------------------------
 
@@ -906,6 +948,7 @@ function restart() {
     // FINALLY, lets run the game
     //-------------------------------------------------------------------------
 
+    initializeTheme();
     run();
 
 
