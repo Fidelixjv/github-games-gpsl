@@ -225,6 +225,7 @@ var Stats = function () {
       }
 
       resize(); // setup all our sizing information
+      initAchievements(); // render initial achievements on screen
       reset();  // reset the per-game variables
       frame();  // start the first frame
 
@@ -350,6 +351,8 @@ function restart() {
       setVisualScore();
       html('game-over-score', ("00000" + Math.floor(score)).slice(-5));
       html('game-over-rows', rows);
+      html('game-over-level', getLevel());
+      renderGameOverAchievements();
       drawGameOverPiece();
       get('game-over').hidden = false;
       playing = false;
@@ -370,11 +373,11 @@ function restart() {
     }
 
     function setVisualScore(n)      { vscore = n || score; invalidateScore(); }
-    function setScore(n)            { score = n; setVisualScore(n);  }
-    function addScore(n)            { score = score + n;   }
+    function setScore(n)            { score = n; setVisualScore(n); checkAchievements(); }
+    function addScore(n)            { score = score + n; checkAchievements(); }
     function clearScore()           { setScore(0); }
     function clearRows()            { setRows(0); }
-    function setRows(n)             { rows = n; step = Math.max(speed.min, speed.start - (speed.decrement*rows)); invalidateRows(); }
+    function setRows(n)             { rows = n; step = Math.max(speed.min, speed.start - (speed.decrement*rows)); invalidateRows(); checkAchievements(); }
     function addRows(n)             { setRows(rows + n); }
     function getBlock(x,y)          { return (blocks && blocks[x] ? blocks[x][y] : null); }
     function setBlock(x,y,type)     { blocks[x] = blocks[x] || []; blocks[x][y] = type; invalidate(); }
@@ -389,6 +392,8 @@ function restart() {
       clearBlocks();
       clearRows();
       clearScore();
+      resetAchievements();
+      if (invalid) invalid.level = true;
       setCurrentPiece(next);
       setNextPiece();
     }
@@ -403,6 +408,7 @@ function restart() {
           dt = dt - step;
           drop();
         }
+        checkAchievements();
       }
     }
 
@@ -498,7 +504,7 @@ function restart() {
     function invalidate()         { invalid.court  = true; }
     function invalidateNext()     { invalid.next   = true; }
     function invalidateScore()    { invalid.score  = true; }
-    function invalidateRows()     { invalid.rows   = true; }
+    function invalidateRows()     { invalid.rows   = true; invalid.level = true; }
 
     function draw() {
       ctx.save();
@@ -508,6 +514,7 @@ function restart() {
       drawNext();
       drawScore();
       drawRows();
+      drawLevel();
       ctx.restore();
     }
 
@@ -556,6 +563,13 @@ function restart() {
       }
     }
 
+    function drawLevel() {
+      if (invalid.level) {
+        html('level', getLevel());
+        invalid.level = false;
+      }
+    }
+
     function drawPiece(ctx, type, x, y, dir) {
       eachblock(type, x, y, dir, function(x, y) {
         drawBlock(ctx, x, y, type.color);
@@ -567,6 +581,312 @@ function restart() {
       ctx.fillRect(x*dx, y*dy, dx, dy);
       ctx.strokeRect(x*dx, y*dy, dx, dy)
     }
+
+    //-------------------------------------------------------------------------
+    // SISTEMA DE CONQUISTAS
+    //-------------------------------------------------------------------------
+
+    function getLevel() {
+      return Math.floor((rows || 0) / 2) + 1;
+    }
+
+    var achievements = [
+      {
+        id: 'rows_1',
+        name: 'Primeira Linha',
+        description: 'Elimine 1 linha durante a partida.',
+        icon: '🎯',
+        target: 1,
+        unit: 'linha',
+        unlocked: false,
+        check: function(s) { return s.rows >= 1; },
+        progress: function(s) { return Math.min(s.rows, 1) / 1; },
+        currentText: function(s) { return Math.min(s.rows, 1) + ' / 1 linha'; }
+      },
+      {
+        id: 'score_100',
+        name: 'Primeiros Passos',
+        description: 'Faça 100 pontos durante a partida.',
+        icon: '⭐',
+        target: 100,
+        unit: 'pts',
+        unlocked: false,
+        check: function(s) { return s.score >= 100; },
+        progress: function(s) { return Math.min(s.score, 100) / 100; },
+        currentText: function(s) { return Math.min(s.score, 100) + ' / 100 pts'; }
+      },
+      {
+        id: 'level_5',
+        name: 'Chegar ao nível 5',
+        description: 'Alcance o nível 5 de dificuldade.',
+        icon: '⚡',
+        target: 5,
+        unit: 'nível',
+        unlocked: false,
+        check: function(s) { return s.level >= 5; },
+        progress: function(s) { return Math.min(s.level, 5) / 5; },
+        currentText: function(s) { return 'Nível ' + Math.min(s.level, 5) + ' / 5'; }
+      },
+      {
+        id: 'rows_10',
+        name: 'Eliminar 10 linhas',
+        description: 'Elimine 10 linhas durante a partida.',
+        icon: '🔥',
+        target: 10,
+        unit: 'linhas',
+        unlocked: false,
+        check: function(s) { return s.rows >= 10; },
+        progress: function(s) { return Math.min(s.rows, 10) / 10; },
+        currentText: function(s) { return Math.min(s.rows, 10) + ' / 10 linhas'; }
+      },
+      {
+        id: 'score_1000',
+        name: 'Fazer 1.000 pontos',
+        description: 'Faça 1.000 pontos durante a partida.',
+        icon: '💎',
+        target: 1000,
+        unit: 'pts',
+        unlocked: false,
+        check: function(s) { return s.score >= 1000; },
+        progress: function(s) { return Math.min(s.score, 1000) / 1000; },
+        currentText: function(s) { return Math.min(s.score, 1000) + ' / 1.000 pts'; }
+      },
+      {
+        id: 'score_3000',
+        name: 'Mestre do Tetris',
+        description: 'Faça 3.000 pontos em uma única partida.',
+        icon: '👑',
+        target: 3000,
+        unit: 'pts',
+        unlocked: false,
+        check: function(s) { return s.score >= 3000; },
+        progress: function(s) { return Math.min(s.score, 3000) / 3000; },
+        currentText: function(s) { return Math.min(s.score, 3000) + ' / 3.000 pts'; }
+      }
+    ];
+
+    function getGameState() {
+      return {
+        score: score || 0,
+        rows: rows || 0,
+        level: getLevel()
+      };
+    }
+
+    function initAchievements() {
+      var list = get('achievements-list');
+      if (!list) return;
+      list.innerHTML = '';
+
+      achievements.forEach(function(ach) {
+        var item = document.createElement('li');
+        item.id = 'achievement-' + ach.id;
+        item.className = 'achievement-item locked';
+        item.setAttribute('role', 'listitem');
+
+        item.innerHTML =
+          '<div class="achievement-item-icon" aria-hidden="true">🔒</div>' +
+          '<div class="achievement-item-content">' +
+            '<div class="achievement-item-top">' +
+              '<span class="achievement-item-name">' + ach.name + '</span>' +
+              '<span class="achievement-item-pill">Bloqueada</span>' +
+            '</div>' +
+            '<p class="achievement-item-desc">' + ach.description + '</p>' +
+            '<div class="achievement-item-track" aria-hidden="true">' +
+              '<div class="achievement-item-bar" style="width: 0%"></div>' +
+            '</div>' +
+            '<div class="achievement-item-meta">' +
+              '<span class="achievement-item-status">' + ach.currentText({ score: 0, rows: 0, level: 1 }) + '</span>' +
+              '<span class="achievement-item-percent">0%</span>' +
+            '</div>' +
+          '</div>';
+
+        list.appendChild(item);
+      });
+
+      updateAchievementsUI(getGameState());
+    }
+
+    function checkAchievements() {
+      var s = getGameState();
+      for (var i = 0; i < achievements.length; i++) {
+        var ach = achievements[i];
+        // Critério 2: Uma conquista já desbloqueada não deve ser liberada novamente na mesma partida
+        if (!ach.unlocked && ach.check(s)) {
+          ach.unlocked = true;
+          unlockAchievement(ach);
+        }
+      }
+      updateAchievementsUI(s);
+    }
+
+    function unlockAchievement(ach) {
+      playAchievementSound();
+      showAchievementToast(ach);
+      updateAchievementsUI(getGameState());
+    }
+
+    function playAchievementSound() {
+      try {
+        var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        if (!window._tetrisAudioContext) {
+          window._tetrisAudioContext = new AudioContextClass();
+        }
+        var ctx = window._tetrisAudioContext;
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        var now = ctx.currentTime;
+        var notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+        notes.forEach(function(freq, idx) {
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+          gain.gain.setValueAtTime(0, now + idx * 0.1);
+          gain.gain.linearRampToValueAtTime(0.15, now + idx * 0.1 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.28);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + idx * 0.1);
+          osc.stop(now + idx * 0.1 + 0.3);
+        });
+      } catch (e) {
+        // audio optional
+      }
+    }
+
+    function showAchievementToast(ach) {
+      var container = get('achievement-toast-container');
+      if (!container) return;
+
+      var toast = document.createElement('div');
+      toast.className = 'achievement-toast';
+      toast.setAttribute('role', 'alert');
+
+      toast.innerHTML =
+        '<div class="achievement-toast-icon" aria-hidden="true">' + (ach.icon || '🏆') + '</div>' +
+        '<div class="achievement-toast-body">' +
+          '<span class="achievement-toast-badge">Conquista Desbloqueada!</span>' +
+          '<strong class="achievement-toast-name">' + ach.name + '</strong>' +
+          '<span class="achievement-toast-desc">' + ach.description + '</span>' +
+        '</div>' +
+        '<button class="achievement-toast-close" type="button" aria-label="Fechar">&times;</button>';
+
+      function dismiss() {
+        if (toast.classList.contains('leaving')) return;
+        toast.classList.add('leaving');
+        setTimeout(function() {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 380);
+      }
+
+      var closeBtn = toast.querySelector('.achievement-toast-close');
+      if (closeBtn) closeBtn.addEventListener('click', dismiss);
+
+      container.appendChild(toast);
+      requestAnimationFrame(function() {
+        toast.classList.add('visible');
+      });
+
+      setTimeout(dismiss, 4200);
+    }
+
+    function updateAchievementsUI(s) {
+      if (!s) s = getGameState();
+      var unlockedCount = 0;
+
+      achievements.forEach(function(ach) {
+        var item = get('achievement-' + ach.id);
+        if (!item) return;
+
+        var ratio = Math.max(0, Math.min(1, ach.progress(s)));
+        var percent = Math.round(ratio * 100);
+
+        if (ach.unlocked) {
+          unlockedCount++;
+          item.className = 'achievement-item unlocked';
+          var iconEl = item.querySelector('.achievement-item-icon');
+          if (iconEl) iconEl.textContent = ach.icon || '🏆';
+          var pillEl = item.querySelector('.achievement-item-pill');
+          if (pillEl) pillEl.textContent = '✨ Desbloqueada';
+          var barEl = item.querySelector('.achievement-item-bar');
+          if (barEl) barEl.style.width = '100%';
+          var statusEl = item.querySelector('.achievement-item-status');
+          if (statusEl) statusEl.textContent = 'Meta Concluída!';
+          var percentEl = item.querySelector('.achievement-item-percent');
+          if (percentEl) percentEl.textContent = '100%';
+        } else {
+          item.className = 'achievement-item locked';
+          var iconEl = item.querySelector('.achievement-item-icon');
+          if (iconEl) iconEl.textContent = '🔒';
+          var pillEl = item.querySelector('.achievement-item-pill');
+          if (pillEl) pillEl.textContent = 'Bloqueada';
+          var barEl = item.querySelector('.achievement-item-bar');
+          if (barEl) barEl.style.width = percent + '%';
+          var statusEl = item.querySelector('.achievement-item-status');
+          if (statusEl) statusEl.textContent = ach.currentText(s);
+          var percentEl = item.querySelector('.achievement-item-percent');
+          if (percentEl) percentEl.textContent = percent + '%';
+        }
+      });
+
+      var counterEl = get('achievements-counter');
+      if (counterEl) {
+        counterEl.textContent = unlockedCount + ' / ' + achievements.length + ' Desbloqueadas';
+        if (unlockedCount > 0) {
+          counterEl.classList.add('has-unlocked');
+        } else {
+          counterEl.classList.remove('has-unlocked');
+        }
+      }
+
+      var overallFill = get('achievements-overall-fill');
+      if (overallFill) {
+        var overallPercent = Math.round((unlockedCount / achievements.length) * 100);
+        overallFill.style.width = overallPercent + '%';
+      }
+    }
+
+    function resetAchievements() {
+      achievements.forEach(function(ach) {
+        ach.unlocked = false;
+      });
+      updateAchievementsUI({ score: 0, rows: 0, level: 1 });
+    }
+
+    function renderGameOverAchievements() {
+      var countEl = get('game-over-achievements-count');
+      var listEl = get('game-over-achievements-list');
+      if (!countEl || !listEl) return;
+
+      var unlocked = achievements.filter(function(a) { return a.unlocked; });
+      countEl.textContent = unlocked.length + ' / ' + achievements.length;
+      listEl.innerHTML = '';
+
+      if (unlocked.length === 0) {
+        listEl.innerHTML = '<span class="game-over-achievement-empty">Nenhuma conquista desbloqueada nesta partida. Tente novamente!</span>';
+      } else {
+        unlocked.forEach(function(ach) {
+          var tag = document.createElement('span');
+          tag.className = 'game-over-achievement-tag';
+          tag.textContent = (ach.icon || '🏆') + ' ' + ach.name;
+          listEl.appendChild(tag);
+        });
+      }
+    }
+
+    // Expose helpers globally for testing/debugging
+    window.TetrisAchievements = {
+      list: achievements,
+      check: checkAchievements,
+      reset: resetAchievements,
+      unlock: unlockAchievement,
+      getLevel: getLevel
+    };
 
     //-------------------------------------------------------------------------
     // FINALLY, lets run the game
