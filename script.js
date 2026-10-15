@@ -286,20 +286,25 @@ var Stats = function () {
         window.location.reload();
       });
     }
-    function restartGame() {
-  reset();
+    
+function restartGame() {
+    reset();
+    closeGameModal();
 
-  closeGameModal();
+    var gameOverScreen = get('game-over');
+    if (gameOverScreen) {
+        gameOverScreen.hidden = true;
+    }
 
-  var gameOverScreen = get('game-over');
-  if (gameOverScreen) {
-    gameOverScreen.hidden = true;
-  }
+    hide('start');
+    paused = false;
+    playing = true;
 
-  hide('start');
-  paused = false;
-  playing = true;
+    if (window.TetrisAudio) {
+        TetrisAudio.startMusic();
+    }
 }
+
     function resize(event) {
       canvas.width   = canvas.clientWidth;  // set canvas logical size equal to its physical size
       canvas.height  = canvas.clientHeight; // (ditto)
@@ -388,6 +393,10 @@ function play() {
     reset();
     paused = false;
     playing = true;
+
+    if (window.TetrisAudio) {
+        TetrisAudio.startMusic();
+    }
 }
 
 function pause() {
@@ -395,24 +404,37 @@ function pause() {
     paused = true;
     playing = false;
     openGameModal();
+  
 }
 
 function restart() {
   closeGameModal();
   resumeCountdown();
    
+  if (window.TetrisAudio) {
+    TetrisAudio.startMusic();
+     }
 }
-     function lose() {
-      hide('start');
-      setVisualScore();
-      html('game-over-score', ("00000" + Math.floor(score)).slice(-5));
-      html('game-over-rows', rows);
-      html('game-over-level', getLevel());
-      renderGameOverAchievements();
-      drawGameOverPiece();
-      get('game-over').hidden = false;
-      playing = false;
+    
+function lose() {
+    hide('start');
+    setVisualScore();
+
+    html('game-over-score', ("00000" + Math.floor(score)).slice(-5));
+    html('game-over-rows', rows);
+    html('game-over-level', getLevel());
+
+    renderGameOverAchievements();
+    drawGameOverPiece();
+
+    get('game-over').hidden = false;
+    playing = false;
+
+    if (window.TetrisAudio) {
+        TetrisAudio.stopMusic();
     }
+}
+
 
     function drawGameOverPiece() {
       var pieceCanvas = get('game-over-piece');
@@ -485,26 +507,42 @@ function restart() {
         case DIR.DOWN:  y = y + 1; break;
       }
       if (unoccupied(current.type, x, y, current.dir)) {
-        current.x = x;
-        current.y = y;
-        invalidate();
-        return true;
-      }
+    current.x = x;
+    current.y = y;
+    invalidate();
+
+    // Som apenas para movimentos manuais
+    if (dir !== DIR.DOWN && window.TetrisAudio) {
+        TetrisAudio.move();
+    }
+
+    return true;
+}
       else {
         return false;
       }
     }
 
-    function rotate() {
-      var newdir = (current.dir == DIR.MAX ? DIR.MIN : current.dir + 1);
-      if (unoccupied(current.type, current.x, current.y, newdir)) {
+   function rotate() {
+    var newdir = (current.dir == DIR.MAX
+        ? DIR.MIN
+        : current.dir + 1);
+
+    if (unoccupied(current.type, current.x, current.y, newdir)) {
         current.dir = newdir;
         invalidate();
-      }
+
+        if (window.TetrisAudio) {
+            TetrisAudio.rotate();
+        }
     }
+}
 
     function drop() {
       if (!move(DIR.DOWN)) {
+        if (window.TetrisAudio) {
+        TetrisAudio.lock();
+        }
         addScore(10);
         dropPiece();
         removeLines();
@@ -783,6 +821,9 @@ function restart() {
     }
 
     function playAchievementSound() {
+      if (window.TetrisAudio && TetrisAudio.isMuted()) {
+    return;
+  }
       try {
         var AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (!AudioContextClass) return;
