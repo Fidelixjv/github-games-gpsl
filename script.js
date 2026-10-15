@@ -193,17 +193,22 @@ var Stats = function () {
     //
     //-------------------------------------------------------------------------
 
-    var i = { size: 4, blocks: [0x0F00, 0x2222, 0x00F0, 0x4444], color: 'purple'   };
-    var j = { size: 3, blocks: [0x44C0, 0x8E00, 0x6440, 0x0E20], color: 'pink'   };
-    var l = { size: 3, blocks: [0x4460, 0x0E80, 0xC440, 0x2E00], color: 'salmon' };
-    var o = { size: 2, blocks: [0xCC00, 0xCC00, 0xCC00, 0xCC00], color: 'lime' };
-    var s = { size: 3, blocks: [0x06C0, 0x8C40, 0x6C00, 0x4620], color: 'teal'  };
-    var t = { size: 3, blocks: [0x0E40, 0x4C40, 0x4E00, 0x4640], color: 'coral' };
-    var z = { size: 3, blocks: [0x0C60, 0x4C80, 0xC600, 0x2640], color: 'olive'    };
+    
+    var i = { size: 4, blocks: [0x0F00, 0x2222, 0x00F0, 0x4444], color: 'red'   };
+    var j = { size: 3, blocks: [0x44C0, 0x8E00, 0x6440, 0x0E20], color: 'green'   };
+    var l = { size: 3, blocks: [0x4460, 0x0E80, 0xC440, 0x2E00], color: 'blue' };
+    var o = { size: 2, blocks: [0xCC00, 0xCC00, 0xCC00, 0xCC00], color: 'orange' };
+    var s = { size: 3, blocks: [0x06C0, 0x8C40, 0x6C00, 0x4620], color: 'purple'  };
+    var t = { size: 3, blocks: [0x0E40, 0x4C40, 0x4E00, 0x4640], color: 'yellow' };
+    var z = { size: 3, blocks: [0x0C60, 0x4C80, 0xC600, 0x2640], color: 'pink'    };
+    var Plus = { size: 3, blocks: [0x4E40, 0x4E40, 0x4E40, 0x4E40], color: 'teal'    };
+    var block = { size: 3, blocks: [0xeee0, 0xeee0, 0xeee0, 0xeee0], color: 'coral'    };
+    var oo = { size: 4, blocks: [0xCCcc, 0x00ff, 0xCCcc, 0x00ff], color: 'maroon' };  
+
 
     //------------------------------------------------
-    // do the bit manipulation and iterate through each
-    // occupied block (x,y) for a given piece
+    // do the bit manipulation and iterate through each   
+    // occupied block (x,y) for a given piecere
     //------------------------------------------------
     function eachblock(type, x, y, dir, fn) {
       var bit, result, row = 0, col = 0, blocks = type.blocks[dir];
@@ -241,7 +246,7 @@ var Stats = function () {
     var pieces = [];
     function randomPiece() {
       if (pieces.length == 0)
-        pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+        pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z,Plus,Plus,Plus,Plus,block,block,block,block,oo,oo,oo,oo];
       var type = pieces.splice(random(0, pieces.length-1), 1)[0];
       return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
     }
