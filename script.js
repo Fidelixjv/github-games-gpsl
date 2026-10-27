@@ -468,6 +468,7 @@ function lose() {
     function clearActions()         { actions = []; }
     function setCurrentPiece(piece) { current = piece || randomPiece(); invalidate();     }
     function setNextPiece(piece)    { next    = piece || randomPiece(); invalidateNext(); }
+    function restartGame() {reset();hide('start');paused = false;playing = true;}   
 
     function reset() {
       dt = 0;
