@@ -729,15 +729,15 @@ function lose() {
       },
       {
         id: 'rows_10',
-        name: 'Eliminar 10 linhas',
-        description: 'Elimine 10 linhas durante a partida.',
+        name: 'Eliminar 12 linhas',
+        description: 'Elimine 12 linhas durante a partida.',
         icon: '🔥',
-        target: 10,
+        target: 12,
         unit: 'linhas',
         unlocked: false,
-        check: function(s) { return s.rows >= 10; },
-        progress: function(s) { return Math.min(s.rows, 10) / 10; },
-        currentText: function(s) { return Math.min(s.rows, 10) + ' / 10 linhas'; }
+        check: function(s) { return s.rows >= 12; },
+        progress: function(s) { return Math.min(s.rows, 12) / 12; },
+        currentText: function(s) { return Math.min(s.rows, 12) + ' / 12 linhas'; }
       },
       {
         id: 'score_1000',
