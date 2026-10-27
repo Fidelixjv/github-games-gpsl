@@ -33,14 +33,17 @@ body      { font-family: Helvetica, sans-serif; background-color: #efefef; }
       display: block;
       padding: 0.55em 0.4em;
       border-radius: 6px;
-      background: #147d70;
+      background: #2563eb; /* ALTERADO AQUI (Antes era #147d70) */
       color: #ffffff;
       font-size: 0.78em;
       font-weight: 700;
       text-align: center;
       transition: background-color 0.18s ease, transform 0.18s ease;
     }
-    #menu #start a:hover { background: #0f6258; transform: translateY(-1px); }
+    #menu #start a:hover { 
+      background: #1d4ed8; /* ALTERADO AQUI (Antes era #0f6258) */
+      transform: translateY(-1px); 
+    }
     .menu-preview { display: flex; flex-direction: column; align-items: center; gap: 0.25em; }
     .menu-section-title, #theme-container label {
       align-self: flex-start;
@@ -558,4 +561,3 @@ body.theme-neon #menu p a {
        cursor: pointer; 
  
 }
-
