@@ -203,7 +203,6 @@ var Stats = function () {
     var t = { size: 3, blocks: [0x0E40, 0x4C40, 0x4E00, 0x4640], color: 'yellow' };
     var z = { size: 3, blocks: [0x0C60, 0x4C80, 0xC600, 0x2640], color: 'pink'    };
     var Plus = { size: 3, blocks: [0x4E40, 0x4E40, 0x4E40, 0x4E40], color: 'teal'    };
-    var block = { size: 3, blocks: [0xeee0, 0xeee0, 0xeee0, 0xeee0], color: 'coral'    };
     var oo = { size: 4, blocks: [0xCCcc, 0x00ff, 0xCCcc, 0x00ff], color: 'maroon' };  
 
 
@@ -247,7 +246,7 @@ var Stats = function () {
     var pieces = [];
     function randomPiece() {
       if (pieces.length == 0)
-        pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z,Plus,Plus,Plus,Plus,block,block,block,block,oo,oo,oo,oo];
+        pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z,Plus,Plus,Plus,Plus,oo,oo,oo,oo];
       var type = pieces.splice(random(0, pieces.length-1), 1)[0];
       return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
     }
@@ -730,15 +729,15 @@ function lose() {
       },
       {
         id: 'rows_10',
-        name: 'Eliminar 10 linhas',
-        description: 'Elimine 10 linhas durante a partida.',
+        name: 'Eliminar 12 linhas',
+        description: 'Elimine 12 linhas durante a partida.',
         icon: '🔥',
-        target: 10,
+        target: 12,
         unit: 'linhas',
         unlocked: false,
-        check: function(s) { return s.rows >= 10; },
-        progress: function(s) { return Math.min(s.rows, 10) / 10; },
-        currentText: function(s) { return Math.min(s.rows, 10) + ' / 10 linhas'; }
+        check: function(s) { return s.rows >= 12; },
+        progress: function(s) { return Math.min(s.rows, 12) / 12; },
+        currentText: function(s) { return Math.min(s.rows, 12) + ' / 12 linhas'; }
       },
       {
         id: 'score_1000',
