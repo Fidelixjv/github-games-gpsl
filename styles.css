@@ -434,7 +434,7 @@ body      { font-family: Helvetica, sans-serif; background-color: #efefef; }
   -webkit-backdrop-filter: blur(16px);
   
   /* Bordas arredondadas e sombras sutis */
-  border-radius: 28px;
+  border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 
@@ -456,189 +456,13 @@ body      { font-family: Helvetica, sans-serif; background-color: #efefef; }
   justify-content: center;
   gap: 10px;
   
-  background-color: #6366f1; /* Tom azul/púrpura suave */
-  color: #ffffff;
-  
-  border: none;
-  border-radius: 50px; /* Estilo pílula */
-  padding: 14px 40px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  
-  /* Sombra roxa no botão */
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+  padding: 0.7em 1.2em; 
+  border: 0;
+   border-radius: 4px;
+    background: #222;
+     color: white;
+      font: inherit;
+       cursor: pointer; 
  
 }
-
-#resume:hover {
-    background-color: aqua;
-}
-
-
-
-
-
-
-
-    #restartButton {
-      width: 100%;
-      padding: 0.5em 0.35em;
-      border: 0;
-      border-radius: 6px;
-      background: #e5ecea;
-      color: #263238;
-      font-size: 0.7em;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.18s ease, color 0.18s ease;
-    }
-
-    #restartButton:hover { background: #d3e2de; color: #124d45; }
-
-    /* ============================= */
-    /* SELETOR DE TEMAS               */
-    /* ============================= */
-
-    #theme-container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25em;
-      margin: 0;
-    }
-
-    #theme-container label {
-      align-self: flex-start;
-    }
-
-    #theme-select {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 0.4em;
-      border: 0;
-      border-radius: 5px;
-      background-color: #e8eef0;
-      color: #263238;
-      font-size: 0.72em;
-      cursor: pointer;
-    }
-
-    /* ============================= */
-    /* TEMAS VISUAIS                  */
-    /* ============================= */
-
-    body.theme-classic #tetris {
-      background-color: #F8F8F8;
-      border-color: black;
-    }
-
-    body.theme-classic #theme-select {
-      background-color: white;
-      color: black;
-    }
-
-    body.theme-ocean #tetris {
-      background-color: #E3F2FD;
-      border-color: #0277BD;
-    }
-
-    body.theme-ocean #theme-select {
-      background-color: #E1F5FE;
-      color: #01579B;
-      border-color: #0277BD;
-    }
-
-    body.theme-ocean #menu p a {
-      color: #01579B;
-    }
-
-    body.theme-ocean #score,
-    body.theme-ocean #rows {
-      color: #0277BD;
-    }
-
-    body.theme-red #tetris {
-      background-color: #FFEBEE;
-      border-color: #B71C1C;
-    }
-
-    body.theme-red #theme-select {
-      background-color: #FFCDD2;
-      color: #B71C1C;
-      border-color: #B71C1C;
-    }
-
-    body.theme-red #menu p a {
-      color: #B71C1C;
-    }
-
-    body.theme-red #score,
-    body.theme-red #rows {
-      color: #D32F2F;
-    }
-
-    body.theme-neon #tetris {
-      background-color: #111111;
-      border-color: #00FFFF;
-    }
-
-    body.theme-neon #theme-select {
-      background-color: #222222;
-      color: #00FFFF;
-      border-color: #00FFFF;
-    }
-
-    body.theme-neon #menu p {
-      color: #00FFFF;
-    }
-
-    body.theme-neon #menu p a {
-      color: #00FFFF;
-    }
-
-    body.theme-neon #theme-container label {
-      color: #00FFFF;
-    }
-
-    body.theme-neon #score,
-    body.theme-neon #rows {
-      color: #00FFFF;
-    }
-
-    body.theme-neon #canvas {
-      border-color: #00FFFF;
-    }
-
-    /* ============================= */
-    /* NÍVEL (cor)                    */
-    /* ============================= */
-    #level { color: #d97706; font-weight: bold; vertical-align: middle; }
-
-    @media screen and (min-width:   0px) and (min-height:   0px)  { #tetris { font-size: 0.75em; width: 250px; } #menu { width: 100px; height: 200px; } #upcoming { width:  50px; height:  50px; } #canvas { width: 100px; height: 200px; } } /* 10px chunks */
-    @media screen and (min-width: 400px) and (min-height: 400px)  { #tetris { font-size: 1.00em; width: 350px; } #menu { width: 150px; height: 300px; } #upcoming { width:  75px; height:  75px; } #canvas { width: 150px; height: 300px; } } /* 15px chunks */
-    @media screen and (min-width: 500px) and (min-height: 500px)  { #tetris { font-size: 1.25em; width: 450px; } #menu { width: 200px; height: 400px; } #upcoming { width: 100px; height: 100px; } #canvas { width: 200px; height: 400px; } } /* 20px chunks */
-    @media screen and (min-width: 600px) and (min-height: 600px)  { #tetris { font-size: 1.50em; width: 550px; } #menu { width: 250px; height: 500px; } #upcoming { width: 125px; height: 125px; } #canvas { width: 250px; height: 500px; } } /* 25px chunks */
-    @media screen and (min-width: 700px) and (min-height: 700px)  { #tetris { font-size: 1.75em; width: 650px; } #menu { width: 300px; height: 600px; } #upcoming { width: 150px; height: 150px; } #canvas { width: 300px; height: 600px; } } /* 30px chunks */
-    @media screen and (min-width: 800px) and (min-height: 800px)  { #tetris { font-size: 2.00em; width: 750px; } #menu { width: 350px; height: 700px; } #upcoming { width: 175px; height: 175px; } #canvas { width: 350px; height: 700px; } } /* 35px chunks */
-    @media screen and (min-width: 900px) and (min-height: 900px)  { #tetris { font-size: 2.25em; width: 850px; } #menu { width: 400px; height: 800px; } #upcoming { width: 200px; height: 200px; } #canvas { width: 400px; height: 800px; } } /* 40px chunks */
-
-    @media screen and (max-width: 860px) {
-      #game-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      #achievements-panel {
-        width: 100%;
-        max-width: 480px;
-      }
-      .achievement-toast-container {
-        top: 10px;
-        left: 10px;
-        right: 10px;
-      }
-      .achievement-toast {
-        min-width: auto;
-        max-width: 100%;
-      }
-    }
 
