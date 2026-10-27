@@ -562,6 +562,16 @@ body.theme-neon #menu p a {
  
 }
 
+#resume:hover {
+    background-color: aqua;
+}
+
+
+
+
+
+
+
     #restartButton {
       width: 100%;
       padding: 0.5em 0.35em;
@@ -688,6 +698,26 @@ body.theme-neon #menu p a {
 
     body.theme-neon #canvas {
       border-color: #00FFFF;
+    }
+
+     body.theme-magic #tetris {
+      background-color: #fffb01;
+      border-color: #d50cfd;
+    }
+
+    body.theme-magic #theme-select {
+      background-color: #fffb01;
+      color: #ffffff;
+      border-color: #d50cfd;
+    }
+
+    body.theme-magic #menu p a {
+      color: #ffffff;
+    }
+
+    body.theme-magic #score,
+    body.theme-magic #rows {
+      color: #d50cfd;
     }
 
     /* ============================= */

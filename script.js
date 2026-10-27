@@ -126,7 +126,8 @@ var Stats = function () {
       classic: { className: 'theme-classic' },
       ocean: { className: 'theme-ocean' },
       red: { className: 'theme-red' },
-      neon: { className: 'theme-neon' }
+      neon: { className: 'theme-neon' },
+      magic: { className: 'theme-magic' }
     };
 
     var currentTheme = 'classic';
@@ -135,7 +136,7 @@ var Stats = function () {
       if (!THEMES[themeName]) themeName = 'classic';
       currentTheme = themeName;
       var body = document.body;
-      body.classList.remove('theme-classic', 'theme-ocean', 'theme-red', 'theme-neon');
+      body.classList.remove('theme-classic', 'theme-ocean', 'theme-red', 'theme-neon', 'theme-magic');
       body.classList.add(THEMES[themeName].className);
       var select = get('theme-select');
       if (select) select.value = themeName;
@@ -149,7 +150,7 @@ var Stats = function () {
       try { savedTheme = localStorage.getItem('tetris-theme'); } catch (e) { savedTheme = null; }
       if (!savedTheme || !THEMES[savedTheme]) savedTheme = 'classic';
       currentTheme = savedTheme;
-      document.body.classList.remove('theme-classic', 'theme-ocean', 'theme-red', 'theme-neon');
+      document.body.classList.remove('theme-classic', 'theme-ocean', 'theme-red', 'theme-neon', 'theme-magic');
       document.body.classList.add(THEMES[savedTheme].className);
       var select = get('theme-select');
       if (select) {
