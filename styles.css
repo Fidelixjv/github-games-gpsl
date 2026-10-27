@@ -259,7 +259,7 @@ body {
   -webkit-backdrop-filter: blur(16px);
   
   /* Bordas arredondadas e sombras sutis */
-  border-radius: 28px;
+  border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 
@@ -281,21 +281,13 @@ body {
   justify-content: center;
   gap: 10px;
   
-  background-color: #6366f1; /* Tom azul/púrpura suave */
-  color: #ffffff;
-  
-  border: none;
-  border-radius: 50px; /* Estilo pílula */
-  padding: 14px 40px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  
-  /* Sombra roxa no botão */
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+  padding: 0.7em 1.2em; 
+  border: 0;
+   border-radius: 4px;
+    background: #222;
+     color: white;
+      font: inherit;
+       cursor: pointer; 
  
 }
 
-#resume:hover {
-    background-color: aqua;
-}
