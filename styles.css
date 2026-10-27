@@ -414,11 +414,104 @@ body      { font-family: Helvetica, sans-serif; background-color: #efefef; }
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         visibility: hidden;
 }
-.modal-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+
+#theme-container label {
+    display: block;
+    margin-bottom: 0.3em;
+    font-weight: bold;
+    font-size: 0.6em;
+}
+
+#theme-select {
+    padding: 0.3em;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+
+/* ============================= */
+/* TEMAS VISUAIS                  */
+/* ============================= */
+
+/* Tema Clássico */
+body.theme-classic #tetris {
+    background-color: #F8F8F8;
+    border-color: black;
+}
+
+body.theme-classic #theme-select {
+    background-color: white;
+    color: black;
+}
+
+
+/* Tema Oceano */
+body.theme-ocean #tetris {
+    background-color: #E3F2FD;
+    border-color: #083a57;
+}
+
+body.theme-ocean #theme-select {
+    background-color: #E1F5FE;
+    color: #01579B;
+    border-color: #0277BD;
+}
+
+body.theme-ocean #menu p a {
+    color: #01579B;
+}
+
+body.theme-ocean #score,
+body.theme-ocean #rows {
+    color: #0277BD;
+}
+
+
+/* Tema Vermelho */
+body.theme-red #tetris {
+    background-color: #FFEBEE;
+    border-color: #B71C1C;
+}
+
+body.theme-red #theme-select {
+    background-color: #FFCDD2;
+    color: #B71C1C;
+    border-color: #B71C1C;
+}
+
+body.theme-red #menu p a {
+    color: #B71C1C;
+}
+
+body.theme-red #score,
+body.theme-red #rows {
+    color: #D32F2F;
+}
+
+
+/* Tema Neon */
+body.theme-neon #tetris {
+    background-color: #111111;
+    border-color: #00FFFF;
+}
+
+body.theme-neon #theme-select {
+    background-color: #222222;
+    color: #00FFFF;
+    border-color: #00FFFF;
+}
+
+/* Todos os textos do menu */
+body.theme-neon #menu p {
+    color: #00FFFF;
+}
+
+/* Botão Press Space to Play */
+body.theme-neon #menu p a {
+    color: #00FFFF;
 }
 
 #pause {
