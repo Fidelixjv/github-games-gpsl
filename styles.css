@@ -609,6 +609,26 @@ body      { font-family: Helvetica, sans-serif; background-color: #efefef; }
       border-color: #00FFFF;
     }
 
+     body.theme-magic #tetris {
+      background-color: #fffb01;
+      border-color: #d50cfd;
+    }
+
+    body.theme-magic #theme-select {
+      background-color: #fffb01;
+      color: #ffffff;
+      border-color: #d50cfd;
+    }
+
+    body.theme-magic #menu p a {
+      color: #ffffff;
+    }
+
+    body.theme-magic #score,
+    body.theme-magic #rows {
+      color: #d50cfd;
+    }
+
     /* ============================= */
     /* NÍVEL (cor)                    */
     /* ============================= */
