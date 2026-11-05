@@ -108,6 +108,7 @@ var Stats = function () {
 
     var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40 },
         DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
+        HIGH_SCORE_KEY = 'tetris-high-score',
         stats   = new Stats(),
         canvas  = get('canvas'),
         ctx     = canvas.getContext('2d'),
@@ -175,6 +176,8 @@ var Stats = function () {
         next,          // the next piece
         score,         // the current score
         vscore,        // the currently displayed score (it catches up to score in small chunks - like a spinning slot machine)
+        highScore = 0, // highest score ever recorded (persisted in localStorage)
+        newRecord = false, // true when the current game has beaten the stored record
         rows,          // number of completed rows in the current game
         step;          // how long before current piece drops by 1 row
 
@@ -425,7 +428,9 @@ function lose() {
     hide('start');
     setVisualScore();
 
-    html('game-over-score', ("00000" + Math.floor(score)).slice(-5));
+    html('game-over-score', formatScore(score));
+    html('game-over-high-score', formatScore(highScore));
+    updateRecordIndicator();
     html('game-over-rows', rows);
     html('game-over-level', getLevel());
 
@@ -455,13 +460,48 @@ function lose() {
       pieceContext.restore();
     }
 
+    function formatScore(n)         { return ("00000" + Math.floor(n || 0)).slice(-5); }
     function setVisualScore(n)      { vscore = n || score; invalidateScore(); }
-    function setScore(n)            { score = n; setVisualScore(n); checkAchievements(); }
-    function addScore(n)            { score = score + n; checkAchievements(); }
+    function setScore(n)            { score = n; setVisualScore(n); updateHighScore(); checkAchievements(); }
+    function addScore(n)            { score = score + n; updateHighScore(); checkAchievements(); }
     function clearScore()           { setScore(0); }
     function clearRows()            { setRows(0); }
     function setRows(n)             { rows = n; step = Math.max(speed.min, speed.start - (speed.decrement*rows)); invalidateRows(); checkAchievements(); }
     function addRows(n)             { setRows(rows + n); }
+    function loadHighScore() {
+      var stored = null;
+      try { stored = localStorage.getItem(HIGH_SCORE_KEY); } catch (e) { stored = null; }
+      var parsed = parseInt(stored, 10);
+      highScore = (isFinite(parsed) && parsed > 0) ? Math.floor(parsed) : 0;
+      invalidateHighScore();
+      drawHighScore();
+    }
+
+    function saveHighScore() {
+      try { localStorage.setItem(HIGH_SCORE_KEY, String(highScore)); } catch (e) {}
+    }
+
+    function updateHighScore() {
+      var currentScore = Math.floor(score || 0);
+      if (!isFinite(currentScore) || currentScore <= highScore) return;
+      highScore = currentScore;
+      newRecord = true;
+      saveHighScore();
+      invalidateHighScore();
+      drawHighScore();
+      updateRecordIndicator();
+    }
+
+    function updateRecordIndicator() {
+      var highScoreEl = get('high-score');
+      if (highScoreEl) {
+        if (newRecord) highScoreEl.classList.add('record-broken');
+        else highScoreEl.classList.remove('record-broken');
+      }
+      var badge = get('game-over-new-record');
+      if (badge) badge.hidden = !newRecord;
+    }
+
     function getBlock(x,y)          { return (blocks && blocks[x] ? blocks[x][y] : null); }
     function setBlock(x,y,type)     { blocks[x] = blocks[x] || []; blocks[x][y] = type; invalidate(); }
     function clearBlocks()          { blocks = []; invalidate(); }
@@ -472,6 +512,8 @@ function lose() {
 
     function reset() {
       dt = 0;
+      newRecord = false;
+      updateRecordIndicator();
       clearActions();
       clearBlocks();
       clearRows();
@@ -604,6 +646,7 @@ function lose() {
     function invalidate()         { invalid.court  = true; }
     function invalidateNext()     { invalid.next   = true; }
     function invalidateScore()    { invalid.score  = true; }
+    function invalidateHighScore(){ invalid.highScore = true; }
     function invalidateRows()     { invalid.rows   = true; invalid.level = true; }
 
     function draw() {
@@ -613,6 +656,7 @@ function lose() {
       drawCourt();
       drawNext();
       drawScore();
+      drawHighScore();
       drawRows();
       drawLevel();
       ctx.restore();
@@ -651,8 +695,15 @@ function lose() {
 
     function drawScore() {
       if (invalid.score) {
-        html('score', ("00000" + Math.floor(vscore)).slice(-5));
+        html('score', formatScore(vscore));
         invalid.score = false;
+      }
+    }
+
+    function drawHighScore() {
+      if (invalid.highScore) {
+        html('high-score', formatScore(highScore));
+        invalid.highScore = false;
       }
     }
 
@@ -991,11 +1042,19 @@ function lose() {
       getLevel: getLevel
     };
 
+    window.TetrisHighScore = {
+      key: HIGH_SCORE_KEY,
+      get: function() { return highScore; },
+      load: loadHighScore,
+      update: updateHighScore
+    };
+
     //-------------------------------------------------------------------------
     // FINALLY, lets run the game
     //-------------------------------------------------------------------------
 
     initializeTheme();
+    loadHighScore();
     run();
 
 

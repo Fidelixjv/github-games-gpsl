@@ -15,6 +15,7 @@
         </div>
         <div class="menu-stats" aria-label="Estatísticas da partida">
           <p class="menu-stat"><span class="stat-label">Pontuação</span> <span id="score">00000</span></p>
+          <p class="menu-stat"><span class="stat-label">Recorde</span> <span id="high-score">00000</span></p>
           <p class="menu-stat"><span class="stat-label">Linhas</span> <span id="rows">0</span></p>
           <p class="menu-stat"><span class="stat-label">Nível</span> <span id="level">1</span></p>
         </div>
@@ -60,6 +61,8 @@
       <h1 id="game-over-title">Game-Over</h1>
       <canvas id="game-over-piece" width="100" height="100" aria-label="Peça que causou o fim do jogo"></canvas>
       <p class="game-over-final-score">Pontuação final: <strong id="game-over-score">00000</strong></p>
+      <p class="game-over-final-high-score">Recorde: <strong id="game-over-high-score">00000</strong></p>
+      <p id="game-over-new-record" class="game-over-new-record" hidden>🏆 Novo recorde!</p>
       <p class="game-over-final-rows">Linhas: <strong id="game-over-rows">0</strong></p>
       <p class="game-over-final-level">Nível: <strong id="game-over-level">1</strong></p>
       <div class="game-over-achievements-box">

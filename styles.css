@@ -56,6 +56,12 @@ body      { font-family: Helvetica, sans-serif; background-color: #efefef; }
     .menu-stat { display: flex; align-items: center; justify-content: space-between; gap: 0.4em; font-size: 0.78em; }
     .stat-label { padding: 0; font-weight: 600; }
     #score    { color: blue; font-weight: bold; vertical-align: middle; }
+    #high-score { color: #b45309; font-weight: bold; vertical-align: middle; display: inline-block; }
+    #high-score.record-broken { animation: record-pulse 0.6s ease-in-out 3; }
+    @keyframes record-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
     #rows     { color: #16833c; font-weight: bold; vertical-align: middle; }
     #level    { color: #d97706; font-weight: bold; vertical-align: middle; }
     #stats    { position: absolute; bottom: 0em; right: 1em; }
@@ -354,6 +360,23 @@ body      { font-family: Helvetica, sans-serif; background-color: #efefef; }
        ========================================================================== */
     .game-over-final-level { margin: 0; font-size: 1.1em; }
     #game-over-level { color: #d97706; font-size: 1.25em; }
+    .game-over-final-high-score { margin: 0; font-size: 1.1em; }
+    #game-over-high-score { color: #b45309; font-size: 1.25em; }
+    .game-over-new-record {
+      margin: 0;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+      font-size: 0.82em;
+      font-weight: 800;
+      animation: record-pop 0.45s ease;
+    }
+    @keyframes record-pop {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
 
     .game-over-achievements-box {
       width: 100%;
@@ -468,6 +491,7 @@ body.theme-ocean #menu p a {
 }
 
 body.theme-ocean #score,
+body.theme-ocean #high-score,
 body.theme-ocean #rows {
     color: #0277BD;
 }
@@ -490,6 +514,7 @@ body.theme-red #menu p a {
 }
 
 body.theme-red #score,
+body.theme-red #high-score,
 body.theme-red #rows {
     color: #D32F2F;
 }
@@ -644,6 +669,7 @@ body.theme-neon #menu p a {
     }
 
     body.theme-ocean #score,
+    body.theme-ocean #high-score,
     body.theme-ocean #rows {
       color: #0277BD;
     }
@@ -664,6 +690,7 @@ body.theme-neon #menu p a {
     }
 
     body.theme-red #score,
+    body.theme-red #high-score,
     body.theme-red #rows {
       color: #D32F2F;
     }
@@ -692,6 +719,7 @@ body.theme-neon #menu p a {
     }
 
     body.theme-neon #score,
+    body.theme-neon #high-score,
     body.theme-neon #rows {
       color: #00FFFF;
     }
@@ -716,6 +744,7 @@ body.theme-neon #menu p a {
     }
 
     body.theme-magic #score,
+    body.theme-magic #high-score,
     body.theme-magic #rows {
       color: #d50cfd;
     }
